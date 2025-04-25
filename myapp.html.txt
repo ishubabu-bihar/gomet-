@@ -1,0 +1,274 @@
+import React from 'react';
+import { View, Text, ScrollView, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
+
+const LiveClassCard = ({ title, subject, teacher, time, viewers }) => (
+  <TouchableOpacity style={styles.liveClassCard}>
+    <Image 
+      source={{ uri: 'https://api.a0.dev/assets/image?text=teacher%20explaining%20physics%20concept%20in%20classroom&aspect=16:9' }}
+      style={styles.thumbnail}
+    />
+    <View style={styles.liveIndicator}>
+      <View style={styles.liveDot} />
+      <Text style={styles.liveText}>LIVE</Text>
+    </View>
+    <View style={styles.classInfo}>
+      <Text style={styles.classTitle}>{title}</Text>
+      <Text style={styles.classDetails}>{subject} • {teacher}</Text>
+      <View style={styles.viewerInfo}>
+        <MaterialIcons name="person" size={16} color="#666" />
+        <Text style={styles.viewerText}>{viewers} watching</Text>
+      </View>
+    </View>
+  </TouchableOpacity>
+);
+
+const QuickActionButton = ({ icon, label }) => (
+  <TouchableOpacity style={styles.quickAction}>
+    {icon}
+    <Text style={styles.quickActionLabel}>{label}</Text>
+  </TouchableOpacity>
+);
+
+export default function HomeScreen() {
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.welcomeText}>Welcome back,</Text>
+            <Text style={styles.userName}>Student</Text>
+          </View>
+          <TouchableOpacity style={styles.profileButton}>
+            <MaterialIcons name="person" size={24} color="#333" />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.quickActions}>
+          <QuickActionButton 
+            icon={<MaterialIcons name="live-tv" size={24} color="#FF4B4B" />}
+            label="Live Classes"
+          />
+          <QuickActionButton 
+            icon={<MaterialIcons name="play-circle-filled" size={24} color="#4CAF50" />}
+            label="Recorded"
+          />
+          <QuickActionButton 
+            icon={<FontAwesome5 name="book-open" size={24} color="#2196F3" />}
+            label="Study Material"
+          />
+          <QuickActionButton 
+            icon={<MaterialIcons name="assignment" size={24} color="#FF9800" />}
+            label="Tests"
+          />
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Live Now</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <LiveClassCard 
+              title="JEE Advanced - Quantum Physics"
+              subject="Physics"
+              teacher="Dr. Sharma"
+              time="10:00 AM"
+              viewers="1.2k"
+            />
+            <LiveClassCard 
+              title="NEET - Human Physiology"
+              subject="Biology"
+              teacher="Dr. Patel"
+              time="11:00 AM"
+              viewers="856"
+            />
+          </ScrollView>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Your Progress</Text>
+          <View style={styles.progressCard}>
+            <View style={styles.progressHeader}>
+              <Text style={styles.progressTitle}>Today's Goals</Text>
+              <Text style={styles.progressPercent}>75%</Text>
+            </View>
+            <View style={styles.progressBar}>
+              <View style={[styles.progressFill, { width: '75%' }]} />
+            </View>
+            <Text style={styles.progressSubtext}>Complete 2 more chapters to reach your daily goal</Text>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F5F6F8',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+  },
+  welcomeText: {
+    fontSize: 16,
+    color: '#666',
+  },
+  userName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  profileButton: {
+    padding: 8,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  quickActions: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
+  quickAction: {
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 12,
+    borderRadius: 12,
+    width: '22%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  quickActionLabel: {
+    marginTop: 8,
+    fontSize: 12,
+    color: '#333',
+    textAlign: 'center',
+  },
+  section: {
+    padding: 16,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    color: '#333',
+  },
+  liveClassCard: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    width: 280,
+    marginRight: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  thumbnail: {
+    width: '100%',
+    height: 156,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+  },
+  liveIndicator: {
+    position: 'absolute',
+    top: 12,
+    left: 12,
+    backgroundColor: '#FF4B4B',
+    borderRadius: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  liveDot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: '#fff',
+    marginRight: 4,
+  },
+  liveText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  classInfo: {
+    padding: 12,
+  },
+  classTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  classDetails: {
+    fontSize: 14,
+    color: '#666',
+    marginTop: 4,
+  },
+  viewerInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 8,
+  },
+  viewerText: {
+    fontSize: 14,
+    color: '#666',
+    marginLeft: 4,
+  },
+  progressCard: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  progressHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  progressTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  progressPercent: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#4CAF50',
+  },
+  progressBar: {
+    height: 8,
+    backgroundColor: '#E0E0E0',
+    borderRadius: 4,
+    marginBottom: 12,
+  },
+  progressFill: {
+    height: '100%',
+    backgroundColor: '#4CAF50',
+    borderRadius: 4,
+  },
+  progressSubtext: {
+    fontSize: 14,
+    color: '#666',
+  },
+});
